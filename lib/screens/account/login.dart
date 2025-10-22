@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/data/bloc/biometric/biometric_cubit.dart';
 import 'package:mobile/screens/account/signup.dart';
 import 'package:mobile/screens/custom_navigation.dart';
 import 'package:mobile/screens/home/home.dart';
@@ -23,6 +25,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final isBiometricEnabled = context.watch<BiometricCubit>().state;
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -115,25 +118,27 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            Center(
-              child: Column(
-                children: [
-                  Text('OR', style: Theme.of(context).textTheme.titleMedium),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            if (isBiometricEnabled)
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            if (isBiometricEnabled)
+              Center(
+                child: Column(
+                  children: [
+                    Text('OR', style: Theme.of(context).textTheme.titleMedium),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.fingerprint_outlined, size: 55.0),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Text(
-                    'Face ID or Finger Print',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.fingerprint_outlined, size: 55.0),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                    Text(
+                      'Face ID or Finger Print',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
+                ),
               ),
-            ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),

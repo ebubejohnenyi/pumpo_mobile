@@ -6,11 +6,13 @@ class CardHeader extends StatelessWidget {
     required this.title,
     this.distance,
     required this.status,
+    this.logo,
   });
 
   final String title;
   final String? distance;
   final String status;
+  final String? logo;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,14 @@ class CardHeader extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       minVerticalPadding: 0,
       visualDensity: VisualDensity.compact,
-      leading: CircleAvatar(),
+      leading: CircleAvatar(
+        child: Image.network(
+          logo != null ? logo! : '',
+          fit: BoxFit.cover,
+          width: 40,
+          height: 40,
+        ),
+      ),
       title: Text(
         title,
         style: Theme.of(

@@ -10,24 +10,20 @@ class CodeContainer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Text(
-            'Share this code \nwith your attendant',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-          ),
+        Text(
+          'Share this code \nwith your attendant',
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
         ),
-        Expanded(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CodeWrapper(code: '9'),
-              CodeWrapper(code: '6'),
-              CodeWrapper(code: '6'),
-              CodeWrapper(code: '0'),
-            ],
-          ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CodeWrapper(code: '9'),
+            CodeWrapper(code: '6'),
+            CodeWrapper(code: '6'),
+            CodeWrapper(code: '0'),
+          ],
         ),
       ],
     );

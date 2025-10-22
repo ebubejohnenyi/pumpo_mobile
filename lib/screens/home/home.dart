@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/data/bloc/stations/station_bloc.dart';
 import 'package:mobile/screens/search/search.dart';
 import 'package:mobile/screens/settings/settings.dart';
 import 'package:mobile/widget/address_wrapper.dart';
@@ -23,6 +25,7 @@ class Home extends StatelessWidget {
               'Your Location',
               style: Theme.of(context).textTheme.titleSmall,
             ),
+
             Row(
               children: [
                 TextButton(
@@ -35,7 +38,7 @@ class Home extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: Text(
-                      '5 Sodeheinde Hudghes St, Makoko',
+                      'Current Address',
                       style: TextTheme.of(context).titleMedium!.copyWith(
                         overflow: TextOverflow.ellipsis,
                         fontWeight: FontWeight.w600,
@@ -43,7 +46,10 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.keyboard_arrow_down_outlined),
+                GestureDetector(
+                  onTap: () {},
+                  child: Icon(Icons.keyboard_arrow_down_outlined),
+                ),
               ],
             ),
           ],
@@ -84,163 +90,264 @@ class Home extends StatelessWidget {
           SizedBox(width: 10),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Near by Stations',
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: Card(
-                elevation: 0,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    children: [
-                      CardHeader(
-                        title: 'Oando Ltd',
-                        distance: '12 km away',
-                        status: 'Active',
+      body: BlocBuilder<StationBloc, StationState>(
+        builder: (context, state) {
+          if (state is StationLoading) {
+            return CircularProgressIndicator();
+          } else if (state is StationLoaded) {
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              itemCount: state.stations.length,
+              itemBuilder: (ctx, index) {
+                if (index == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      'Nearby Stations',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
-                      Divider(
-                        color: Colors.grey[100],
-                        thickness: 1.5,
-                        height: 0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PriceWrapper(
-                              title: 'Petrol',
-                              price: '630',
-                              unit: 'liter',
+                    ),
+                  );
+                }
+
+                final station = state.stations[index - 1];
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: Card(
+                    elevation: 0,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          CardHeader(
+                            logo: station.logo,
+                            title: station.name,
+                            distance: station.distance,
+                            status: station.status,
+                          ),
+                          Divider(
+                            color: Colors.grey[100],
+                            thickness: 1.5,
+                            height: 0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                PriceWrapper(
+                                  title: 'Petrol',
+                                  price: station.petrolPrice,
+                                  unit: 'liter',
+                                ),
+                                PriceWrapper(
+                                  title: 'Diesel',
+                                  price: station.dieselPrice,
+                                  unit: 'liter',
+                                ),
+                                PriceWrapper(
+                                  title: 'Gas',
+                                  price: station.gasPrice,
+                                  unit: 'kg',
+                                ),
+                              ],
                             ),
-                            PriceWrapper(
-                              title: 'Diesel',
-                              price: '950',
-                              unit: 'liter',
-                            ),
-                            PriceWrapper(
-                              title: 'Gas',
-                              price: '330',
-                              unit: 'kg',
-                            ),
-                          ],
-                        ),
+                          ),
+                          Divider(
+                            color: Colors.grey[100],
+                            thickness: 1.5,
+                            height: 0,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          AddressWrapper(
+                            label: 'Filling Stattion',
+                            address: station.stationAddress,
+                            icon: Icons.my_location,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          AddressWrapper(
+                            label: 'You',
+                            address: station.userAddress,
+                            icon: Icons.location_pin,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                        ],
                       ),
-                      Divider(
-                        color: Colors.grey[100],
-                        thickness: 1.5,
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      AddressWrapper(
-                        label: 'Filling Stattion',
-                        address: 'Sabo yaba round about, off iwaya road.',
-                        icon: Icons.my_location,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      AddressWrapper(
-                        label: 'You',
-                        address: '88 Ozumba Mbadiwe Lekki Road',
-                        icon: Icons.location_pin,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Card(
-                elevation: 0,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    children: [
-                      CardHeader(
-                        title: 'Oando Ltd',
-                        distance: '12 km away',
-                        status: 'Active',
-                      ),
-                      Divider(
-                        color: Colors.grey[100],
-                        thickness: 1.5,
-                        height: 0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PriceWrapper(
-                              title: 'Petrol',
-                              price: '630',
-                              unit: 'liter',
-                            ),
-                            PriceWrapper(
-                              title: 'Diesel',
-                              price: '950',
-                              unit: 'liter',
-                            ),
-                            PriceWrapper(
-                              title: 'Gas',
-                              price: '330',
-                              unit: 'kg',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.grey[100],
-                        thickness: 1.5,
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      AddressWrapper(
-                        label: 'Filling Stattion',
-                        address: 'Sabo yaba round about, off iwaya road.',
-                        icon: Icons.my_location,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      AddressWrapper(
-                        label: 'You',
-                        address: '88 Ozumba Mbadiwe Lekki Road',
-                        icon: Icons.location_pin,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+                );
+              },
+            );
+          }
+          return SizedBox();
+        },
       ),
+
+      // SingleChildScrollView(
+      //   padding: EdgeInsets.symmetric(horizontal: 10),
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: [
+      //       Text(
+      //         'Near by Stations',
+      //         style: Theme.of(
+      //           context,
+      //         ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+      //       ),
+      //       SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+      //       Padding(
+      //         padding: EdgeInsets.only(bottom: 20.0),
+      //         child: Card(
+      //           elevation: 0,
+      //           color: Colors.white,
+      //           child: Padding(
+      //             padding: const EdgeInsets.symmetric(horizontal: 10),
+      //             child: Column(
+      //               children: [
+      //                 CardHeader(
+      //                   title: 'Oando Ltd',
+      //                   distance: '12 km away',
+      //                   status: 'Active',
+      //                 ),
+      //                 Divider(
+      //                   color: Colors.grey[100],
+      //                   thickness: 1.5,
+      //                   height: 0,
+      //                 ),
+      //                 Padding(
+      //                   padding: const EdgeInsets.symmetric(vertical: 20.0),
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: [
+      //                       PriceWrapper(
+      //                         title: 'Petrol',
+      //                         price: '630',
+      //                         unit: 'liter',
+      //                       ),
+      //                       PriceWrapper(
+      //                         title: 'Diesel',
+      //                         price: '950',
+      //                         unit: 'liter',
+      //                       ),
+      //                       PriceWrapper(
+      //                         title: 'Gas',
+      //                         price: '330',
+      //                         unit: 'kg',
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //                 Divider(
+      //                   color: Colors.grey[100],
+      //                   thickness: 1.5,
+      //                   height: 0,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.02,
+      //                 ),
+      //                 AddressWrapper(
+      //                   label: 'Filling Stattion',
+      //                   address: 'Sabo yaba round about, off iwaya road.',
+      //                   icon: Icons.my_location,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.01,
+      //                 ),
+      //                 AddressWrapper(
+      //                   label: 'You',
+      //                   address: '88 Ozumba Mbadiwe Lekki Road',
+      //                   icon: Icons.location_pin,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.02,
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //       Padding(
+      //         padding: const EdgeInsets.only(bottom: 10.0),
+      //         child: Card(
+      //           elevation: 0,
+      //           color: Colors.white,
+      //           child: Padding(
+      //             padding: const EdgeInsets.symmetric(horizontal: 10),
+      //             child: Column(
+      //               children: [
+      //                 CardHeader(
+      //                   title: 'Oando Ltd',
+      //                   distance: '12 km away',
+      //                   status: 'Active',
+      //                 ),
+      //                 Divider(
+      //                   color: Colors.grey[100],
+      //                   thickness: 1.5,
+      //                   height: 0,
+      //                 ),
+      //                 Padding(
+      //                   padding: const EdgeInsets.symmetric(vertical: 20.0),
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                     children: [
+      //                       PriceWrapper(
+      //                         title: 'Petrol',
+      //                         price: '630',
+      //                         unit: 'liter',
+      //                       ),
+      //                       PriceWrapper(
+      //                         title: 'Diesel',
+      //                         price: '950',
+      //                         unit: 'liter',
+      //                       ),
+      //                       PriceWrapper(
+      //                         title: 'Gas',
+      //                         price: '330',
+      //                         unit: 'kg',
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //                 Divider(
+      //                   color: Colors.grey[100],
+      //                   thickness: 1.5,
+      //                   height: 0,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.02,
+      //                 ),
+      //                 AddressWrapper(
+      //                   label: 'Filling Stattion',
+      //                   address: 'Sabo yaba round about, off iwaya road.',
+      //                   icon: Icons.my_location,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.01,
+      //                 ),
+      //                 AddressWrapper(
+      //                   label: 'You',
+      //                   address: '88 Ozumba Mbadiwe Lekki Road',
+      //                   icon: Icons.location_pin,
+      //                 ),
+      //                 SizedBox(
+      //                   height: MediaQuery.of(context).size.height * 0.02,
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

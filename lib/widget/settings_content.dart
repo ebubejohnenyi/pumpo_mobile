@@ -4,7 +4,7 @@ class SettingsContent extends StatelessWidget {
   const SettingsContent({
     super.key,
     required this.title,
-    required this.onTap,
+    this.onTap,
     this.hintTitle,
     this.suffixIcon,
     this.prefixIcon,
@@ -14,7 +14,7 @@ class SettingsContent extends StatelessWidget {
 
   final String title;
   final String? hintTitle;
-  final void Function() onTap;
+  final void Function()? onTap;
   final IconData? suffixIcon;
   final Widget? suffixWidget;
   final IconData? prefixIcon;
@@ -74,7 +74,11 @@ class SettingsContent extends StatelessWidget {
                       ),
                     ],
                   ),
-                  suffixIcon != null ? Icon(suffixIcon) : suffixWidget!,
+                  suffixIcon != null
+                      ? Icon(suffixIcon!)
+                      : suffixWidget != null
+                      ? suffixWidget!
+                      : SizedBox(),
                 ],
               ),
             ],

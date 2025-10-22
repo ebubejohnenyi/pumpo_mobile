@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/data/bloc/biometric/biometric_cubit.dart';
+import 'package:mobile/screens/account/login.dart';
 
 import '../../widget/settings_content.dart';
 
@@ -37,19 +40,20 @@ class _SecurityState extends State<Security> {
                 prefixIcon: Icons.lock_outline,
                 suffixWidget: Transform.scale(
                   scale: 0.6,
-                  child: Switch(
-                    value: isToggled,
-                    onChanged: (value) {
-                      setState(() {
-                        isToggled = value;
-                      });
+                  child: BlocBuilder<BiometricCubit, bool>(
+                    builder: (context, useBiometric) {
+                      return Switch(
+                        value: useBiometric,
+                        onChanged: (value) {
+                          context.read<BiometricCubit>().toggleBiometric(value);
+                        },
+                        inactiveTrackColor: Colors.grey.shade200,
+                        activeTrackColor: Colors.green,
+                      );
                     },
-                    inactiveTrackColor: Colors.grey.shade200,
-                    activeTrackColor: Colors.green,
                   ),
                 ),
                 title: 'Biometrics',
-                onTap: () {},
               ),
               SettingsContent(
                 prefixIcon: Icons.password_outlined,
