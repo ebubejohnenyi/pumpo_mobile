@@ -22,12 +22,15 @@ class AddressWrapper extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              address,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.75,
+              child: Text(
+                address,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Text(label, style: Theme.of(context).textTheme.titleMedium),
           ],

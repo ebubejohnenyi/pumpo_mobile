@@ -7,11 +7,13 @@ class CardHeader extends StatelessWidget {
     this.distance,
     required this.status,
     this.logo,
+    this.onTapStatus,
   });
 
   final String title;
   final String? distance;
   final String status;
+  final void Function()? onTapStatus;
   final String? logo;
 
   @override
@@ -52,17 +54,20 @@ class CardHeader extends StatelessWidget {
                 ),
               ),
             )
-          : Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Text(
-                '30 Litres',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w700,
+          : GestureDetector(
+              onTap: onTapStatus ?? () {},
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Text(
+                  status,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),

@@ -1,23 +1,22 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:mobile/model/station_model.dart';
+import 'package:dio/dio.dart';
 
 class StationProvider {
-  final baseUrl = Uri.https(
-    'shopping-demo-5e6be-default-rtdb.firebaseio.com',
-    'stations.json',
-  );
+  final dio = Dio();
 
   Future<List<StationModel>> loadStations() async {
-    final response = await http.get(baseUrl);
+    Response response;
+    response = await dio.get(
+      'https://shopping-demo-5e6be-default-rtdb.firebaseio.com/stations.json',
+    );
 
-    if (response.body == 'null') {
+    if (response.data == null) {
       return [];
     }
+
     final List<StationModel> stations = [];
 
-    final Map<String, dynamic> listData = json.decode(response.body);
+    final Map<String, dynamic> listData = response.data;
 
     for (final station in listData.entries) {
       stations.add(

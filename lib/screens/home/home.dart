@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/data/bloc/stations/station_bloc.dart';
+import 'package:mobile/screens/pre_order/pre_order.dart';
 import 'package:mobile/screens/search/search.dart';
 import 'package:mobile/screens/settings/settings.dart';
 import 'package:mobile/widget/address_wrapper.dart';
@@ -112,74 +113,86 @@ class Home extends StatelessWidget {
                 }
 
                 final station = state.stations[index - 1];
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                  child: Card(
-                    elevation: 0,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        children: [
-                          CardHeader(
-                            logo: station.logo,
-                            title: station.name,
-                            distance: station.distance,
-                            status: station.status,
-                          ),
-                          Divider(
-                            color: Colors.grey[100],
-                            thickness: 1.5,
-                            height: 0,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                PriceWrapper(
-                                  title: 'Petrol',
-                                  price: station.petrolPrice,
-                                  unit: 'liter',
-                                ),
-                                PriceWrapper(
-                                  title: 'Diesel',
-                                  price: station.dieselPrice,
-                                  unit: 'liter',
-                                ),
-                                PriceWrapper(
-                                  title: 'Gas',
-                                  price: station.gasPrice,
-                                  unit: 'kg',
-                                ),
-                              ],
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => PreOrder(station: station),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Card(
+                      elevation: 0,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          children: [
+                            CardHeader(
+                              logo: station.logo,
+                              title: station.name,
+                              distance: station.distance,
+                              status: station.status,
                             ),
-                          ),
-                          Divider(
-                            color: Colors.grey[100],
-                            thickness: 1.5,
-                            height: 0,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          AddressWrapper(
-                            label: 'Filling Stattion',
-                            address: station.stationAddress,
-                            icon: Icons.my_location,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          AddressWrapper(
-                            label: 'You',
-                            address: station.userAddress,
-                            icon: Icons.location_pin,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                        ],
+                            Divider(
+                              color: Colors.grey[100],
+                              thickness: 1.5,
+                              height: 0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 20.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  PriceWrapper(
+                                    title: 'Petrol',
+                                    price: station.petrolPrice,
+                                    unit: 'liter',
+                                  ),
+                                  PriceWrapper(
+                                    title: 'Diesel',
+                                    price: station.dieselPrice,
+                                    unit: 'liter',
+                                  ),
+                                  PriceWrapper(
+                                    title: 'Gas',
+                                    price: station.gasPrice,
+                                    unit: 'kg',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: Colors.grey[100],
+                              thickness: 1.5,
+                              height: 0,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            AddressWrapper(
+                              label: 'Filling Stattion',
+                              address: station.stationAddress,
+                              icon: Icons.my_location,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
+                            ),
+                            AddressWrapper(
+                              label: 'You',
+                              address: station.userAddress,
+                              icon: Icons.location_pin,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
