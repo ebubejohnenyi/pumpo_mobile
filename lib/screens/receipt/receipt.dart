@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/order/order.dart';
 import 'package:mobile/widget/custom_button.dart';
 import 'package:mobile/widget/receipt_content.dart';
@@ -73,9 +74,7 @@ class Receipt extends StatelessWidget {
             CustomButton(
               title: 'Go to Orders',
               onClick: () {
-                Navigator.of(
-                  context,
-                ).pushReplacement(MaterialPageRoute(builder: (ctx) => Order()));
+                context.go('/order');
               },
             ),
           ],

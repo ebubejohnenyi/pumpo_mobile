@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/forgotten_password/verify_code.dart';
 import 'package:mobile/widget/pin_code_input.dart';
 
@@ -58,10 +59,7 @@ class ForgottenPassword extends StatelessWidget {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                       }
-
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => VerifyCode()),
-                      );
+                      context.go('/verify-code');
                     },
                   ),
                 ],

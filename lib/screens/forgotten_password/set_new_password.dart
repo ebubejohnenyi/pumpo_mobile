@@ -107,9 +107,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                       }
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => Login()),
-                      );
+                      context.go('/login');
                     },
                   ),
                 ],

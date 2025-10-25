@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/wallet/add_money.dart';
 import 'package:mobile/widget/transaction_wapper.dart';
 import 'package:mobile/widget/wallet_balance_card.dart';
@@ -57,9 +58,7 @@ class Wallet extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(
-                          context,
-                        ).push(MaterialPageRoute(builder: (ctx) => AddMoney()));
+                        context.push('/add-money');
                       },
                       child: Row(
                         children: [
@@ -78,7 +77,7 @@ class Wallet extends StatelessWidget {
                 title: 'Recent Activity',
                 trailingText: 'See all',
               ),
-              TransactionWrapper(),
+              TransactionWrapper(date: 'Today'),
             ],
           ),
         ),

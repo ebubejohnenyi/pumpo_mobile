@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/data/bloc/stations/station_bloc.dart';
 import 'package:mobile/screens/pre_order/pre_order.dart';
 import 'package:mobile/screens/search/search.dart';
@@ -59,9 +60,7 @@ class Home extends StatelessWidget {
           IconWrapper(
             icon: IconButton(
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (ctx) => Search()));
+                context.push('/search');
               },
               icon: Icon(Icons.search_outlined),
             ),
@@ -70,9 +69,7 @@ class Home extends StatelessWidget {
           IconWrapper(
             icon: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => NotificationScreen()),
-                );
+                context.push('/notification');
               },
               icon: Icon(Icons.notifications_none_outlined),
             ),
@@ -81,9 +78,7 @@ class Home extends StatelessWidget {
           IconWrapper(
             icon: IconButton(
               onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (ctx) => Settings()));
+                context.push('/settings');
               },
               icon: Icon(Icons.settings),
             ),
@@ -115,11 +110,7 @@ class Home extends StatelessWidget {
                 final station = state.stations[index - 1];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => PreOrder(station: station),
-                      ),
-                    );
+                    context.push('/pre-order', extra: station);
                   },
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 20.0),

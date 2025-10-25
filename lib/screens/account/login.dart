@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/data/bloc/biometric/biometric_cubit.dart';
 import 'package:mobile/screens/account/signup.dart';
 import 'package:mobile/screens/custom_navigation.dart';
@@ -96,12 +97,7 @@ class _LoginState extends State<Login> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (ctx) => ForgottenPassword(),
-                          ),
-                        );
+                        context.push('/forgotten-password');
                       },
                       child: Text(
                         'Forgotten Password?',
@@ -121,9 +117,7 @@ class _LoginState extends State<Login> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                       }
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => CustomNavigation()),
-                      );
+                      context.go('/home');
                     },
                   ),
                 ],
@@ -137,7 +131,6 @@ class _LoginState extends State<Login> {
                   children: [
                     Text('OR', style: Theme.of(context).textTheme.titleMedium),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-
                     IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.fingerprint_outlined, size: 55.0),
@@ -166,10 +159,7 @@ class _LoginState extends State<Login> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (ctx) => SignUp()),
-                        );
+                        context.go('/sign-up');
                       },
                       child: Text(
                         'Sign Up',

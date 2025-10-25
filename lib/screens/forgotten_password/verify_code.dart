@@ -57,9 +57,7 @@ class VerifyCode extends StatelessWidget {
             CustomButton(
               title: 'Verify Code',
               onClick: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx) => SetNewPassword()),
-                );
+                context.go('/set-new-password');
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),

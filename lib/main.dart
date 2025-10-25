@@ -9,6 +9,7 @@ import 'package:mobile/data/bloc/biometric/biometric_cubit.dart';
 import 'package:mobile/data/bloc/stations/station_bloc.dart';
 import 'package:mobile/data/data_provider/station_provider.dart';
 import 'package:mobile/data/repository/stations/station_repository.dart';
+import 'package:mobile/router/app_router.dart';
 import 'package:mobile/screens/account/login.dart';
 import 'package:mobile/screens/account/signup.dart';
 import 'package:mobile/screens/custom_navigation.dart';
@@ -70,24 +71,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      home: BlocBuilder<AppStartBloc, AppStartState>(
-        builder: (ctx, state) {
-          if (state is AppStartLoading) {
-            return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }
-          if (state is FirstTimeUser) {
-            return Splash();
-          }
-          if (state is ReturningUser) {
-            return Login();
-          } else {
-            return const Scaffold(
-              body: Center(child: Text('Something went wrong')),
-            );
-          }
-        },
+    final router = AppRouter.router;
+
+    return BlocListener<AppStartBloc, AppStartState>(
+      listener: (context, state) {
+        if (state is AppStartLoading) {
+          router.go('/loading');
+        } else if (state is FirstTimeUser) {
+          router.go('/splash');
+        } else if (state is ReturningUser) {
+          router.go('/login');
+        } else {
+          router.go('/error');
+        }
+      },
+      child: MaterialApp.router(
+        routerConfig: router,
+        theme: theme,
+        // home: BlocBuilder<AppStartBloc, AppStartState>(
+        //   builder: (ctx, state) {
+        //     if (state is AppStartLoading) {
+        //       return Scaffold(body: Center(child: CircularProgressIndicator()));
+        //     }
+        //     if (state is FirstTimeUser) {
+        //       return Splash();
+        //     }
+        //     if (state is ReturningUser) {
+        //       return Login();
+        //     } else {
+        //       return const Scaffold(
+        //         body: Center(child: Text('Something went wrong')),
+        //       );
+        //     }
+        //   },
+        // ),
       ),
     );
   }

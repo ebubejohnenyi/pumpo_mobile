@@ -124,7 +124,7 @@ class _LoginState extends State<SignUp> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                       }
-                      context.go('/main');
+                      context.go('/home');
                     },
                   ),
                 ],

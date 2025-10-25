@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/settings/customer_support.dart';
 import 'package:mobile/screens/settings/languages.dart';
 import 'package:mobile/screens/settings/manage_card.dart';
@@ -36,18 +37,14 @@ class Settings extends StatelessWidget {
                 title: 'Profile Details',
                 suffixIcon: Icons.arrow_forward_ios,
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (ctx) => ProfileDetails()));
+                  context.push('/profile-detail');
                 },
               ),
               SettingsContent(
                 title: 'Customer Support',
                 suffixIcon: Icons.arrow_forward_ios,
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => CustomerSupport()),
-                  );
+                  context.push('/customer-support');
                 },
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.01),
@@ -60,34 +57,27 @@ class Settings extends StatelessWidget {
               SettingsContent(
                 title: 'Referrals',
                 suffixIcon: Icons.arrow_forward_ios,
-
                 onTap: () {},
               ),
               SettingsContent(
                 title: 'Languages',
                 suffixIcon: Icons.arrow_forward_ios,
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (ctx) => Languages()));
+                  context.push('/language');
                 },
               ),
               SettingsContent(
                 title: 'Security',
                 suffixIcon: Icons.arrow_forward_ios,
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (ctx) => Security()));
+                  context.push('/security');
                 },
               ),
               SettingsContent(
                 title: 'Manage Card',
                 suffixIcon: Icons.arrow_forward_ios,
                 onTap: () {
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (ctx) => ManageCard()));
+                  context.push('/manage-card');
                 },
               ),
             ],

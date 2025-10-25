@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/screens/home/home.dart';
-import 'package:mobile/screens/wallet/wallet.dart';
+import 'package:go_router/go_router.dart';
 
-import 'order/order.dart';
-
-class CustomNavigation extends StatefulWidget {
-  const CustomNavigation({super.key});
-
-  @override
-  State<CustomNavigation> createState() {
-    return _CustomNavigationState();
-  }
-}
-
-class _CustomNavigationState extends State<CustomNavigation> {
-  var _selectedIndex = 0;
-
-  final List<Widget> screens = [Home(), Order(), Wallet()];
-
-  void _onDestinationSelected(int index) {
-    setState(() => _selectedIndex = index);
-  }
+class CustomNavigation extends StatelessWidget {
+  const CustomNavigation({super.key, required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+
+    int selectedIndex = 0;
+    if (location.contains('/order')) selectedIndex = 1;
+    if (location.contains('/wallet')) selectedIndex = 2;
     return Scaffold(
-      body: screens[_selectedIndex],
+      body: child,
       bottomNavigationBar: SafeArea(
         minimum: EdgeInsets.only(bottom: 10),
         child: Container(
@@ -70,8 +58,20 @@ class _CustomNavigationState extends State<CustomNavigation> {
               ),
               child: NavigationBar(
                 height: 70,
-                selectedIndex: _selectedIndex,
-                onDestinationSelected: _onDestinationSelected,
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (index) {
+                  switch (index) {
+                    case 0:
+                      context.go('/home');
+                      break;
+                    case 1:
+                      context.go('/order');
+                      break;
+                    case 2:
+                      context.go('/wallet');
+                      break;
+                  }
+                },
                 destinations: const [
                   NavigationDestination(
                     icon: Icon(Icons.home_outlined),

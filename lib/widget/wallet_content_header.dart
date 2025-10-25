@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WalletContentHeader extends StatelessWidget {
   const WalletContentHeader({
@@ -22,10 +23,15 @@ class WalletContentHeader extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: trailingText != null
-                ? Text(
-                    trailingText!,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      decoration: TextDecoration.underline,
+                ? GestureDetector(
+                    onTap: () {
+                      context.push('/transaction');
+                    },
+                    child: Text(
+                      trailingText!,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   )
                 : SizedBox(),

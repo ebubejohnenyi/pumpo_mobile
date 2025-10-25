@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile/widget/transaction_card.dart';
 
 class TransactionWrapper extends StatelessWidget {
-  const TransactionWrapper({super.key});
+  const TransactionWrapper({super.key, required this.date});
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class TransactionWrapper extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Text(
-            'Today',
+            date,
             style: Theme.of(
               context,
             ).textTheme.titleSmall!.copyWith(color: Colors.grey),

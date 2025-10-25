@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/receipt/receipt.dart';
 import 'package:mobile/widget/assurance.dart';
 import 'package:mobile/widget/custom_button.dart';
@@ -333,11 +334,7 @@ class _PreOrderState extends State<PreOrder> {
                     CustomButton(
                       title: 'Continue',
                       onClick: () {
-                        Navigator.pop(context);
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (ctx) => Receipt()),
-                        );
+                        context.go('/receipt');
                       },
                     ),
                   ],
