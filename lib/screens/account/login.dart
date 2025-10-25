@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/data/bloc/biometric/biometric_cubit.dart';
 import 'package:mobile/screens/account/signup.dart';
 import 'package:mobile/screens/custom_navigation.dart';
-import 'package:mobile/screens/home/home.dart';
+import 'package:mobile/screens/forgotten_password/forgotten_password.dart';
 import 'package:mobile/widget/custom_button.dart';
 import 'package:mobile/widget/custom_input.dart';
 
@@ -27,9 +27,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final isBiometricEnabled = context.watch<BiometricCubit>().state;
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 70.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -94,12 +94,23 @@ class _LoginState extends State<Login> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      'Forgotten Password?',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
-                        fontWeight: FontWeight.bold,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => ForgottenPassword(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forgotten Password?',
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              decoration: TextDecoration.underline,
+                              decorationThickness: 2,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),

@@ -15,9 +15,11 @@ class Assurance extends StatelessWidget {
         children: [
           Icon(Icons.shield_moon),
           SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-          Text(
-            'We adhere entirely to the data security \nstandards of the payment card industry',
-            style: Theme.of(context).textTheme.titleMedium,
+          Expanded(
+            child: Text(
+              'We adhere entirely to the data security standards of the payment card industry',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
         ],
       ),

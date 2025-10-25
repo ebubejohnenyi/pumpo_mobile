@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/screens/account/login.dart';
 import 'package:mobile/screens/custom_navigation.dart';
 
@@ -27,7 +28,8 @@ class _LoginState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(backgroundColor: Colors.white),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
@@ -122,9 +124,7 @@ class _LoginState extends State<SignUp> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                       }
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => CustomNavigation()),
-                      );
+                      context.go('/main');
                     },
                   ),
                 ],
@@ -146,10 +146,7 @@ class _LoginState extends State<SignUp> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (ctx) => Login()),
-                        );
+                        context.go('/login');
                       },
                       child: Text(
                         "Login",

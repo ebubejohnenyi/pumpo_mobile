@@ -274,7 +274,7 @@ class _PreOrderState extends State<PreOrder> {
     String selectedMethod = '';
     showModalBottomSheet(
       context: context,
-      isScrollControlled: false,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
@@ -283,7 +283,7 @@ class _PreOrderState extends State<PreOrder> {
         return StatefulBuilder(
           builder: (context, setModalState) {
             return FractionallySizedBox(
-              heightFactor: 0.85,
+              heightFactor: 0.8,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 15.0,
