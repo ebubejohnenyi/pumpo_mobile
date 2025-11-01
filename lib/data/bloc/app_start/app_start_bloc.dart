@@ -14,6 +14,8 @@ class AppStartBloc extends Bloc<AppStartEvent, AppStartState> {
   ) async {
     emit(AppStartLoading());
 
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final isFirstTime = prefs.getBool('isFirstTime') ?? true;

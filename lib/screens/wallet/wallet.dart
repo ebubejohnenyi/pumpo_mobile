@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/screens/wallet/add_money.dart';
 import 'package:mobile/widget/transaction_wapper.dart';
 import 'package:mobile/widget/wallet_balance_card.dart';
 import 'package:mobile/widget/wallet_content_header.dart';

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/screens/account/login.dart';
-import 'package:mobile/screens/custom_navigation.dart';
-
 import '../../widget/custom_button.dart';
 import '../../widget/custom_input.dart';
-import '../home/home.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

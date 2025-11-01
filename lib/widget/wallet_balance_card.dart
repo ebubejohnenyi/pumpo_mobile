@@ -43,7 +43,6 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                 ),
               ),
               Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Fund wallet with your \n virtual account number',
@@ -87,13 +86,13 @@ class _WalletBalanceCardState extends State<WalletBalanceCard> {
                                       Icon(
                                         Icons.copy_all_outlined,
                                         color: Colors.white,
-                                        size: 20,
+                                        size: 15,
                                       ),
                                       Text(
                                         isCopied ? 'Copied' : 'Copy',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .titleMedium!
+                                            .titleSmall!
                                             .copyWith(color: Colors.white),
                                       ),
                                     ],

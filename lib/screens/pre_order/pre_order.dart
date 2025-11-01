@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/screens/receipt/receipt.dart';
 import 'package:mobile/widget/assurance.dart';
+import 'package:mobile/widget/bottom_modal.dart';
 import 'package:mobile/widget/custom_button.dart';
 import 'package:mobile/widget/map_screen.dart';
 import 'package:mobile/widget/payment_method_content.dart';
+import 'package:mobile/widget/track_successful_content.dart';
 
 import '../../model/station_model.dart';
 import '../../widget/address_wrapper.dart';
 import '../../widget/card_header.dart';
 import '../../widget/price_wrapper.dart';
+import '../../widget/receipt_content.dart';
 
 class PreOrder extends StatefulWidget {
   const PreOrder({super.key, required this.station});
+
   final StationModel station;
 
   @override
@@ -25,6 +28,7 @@ class _PreOrderState extends State<PreOrder> {
   var isVisible = true;
   String selectedFuel = 'Petrol';
   String? selectedPrice;
+  String selectedMethod = '';
 
   late final Map<String, dynamic> fuelTypes;
 
@@ -244,7 +248,7 @@ class _PreOrderState extends State<PreOrder> {
                                     .textTheme
                                     .titleMedium!
                                     .copyWith(color: Colors.grey),
-                                onClick: _showModal,
+                                onClick: () {},
                               ),
                             ),
                             SizedBox(
@@ -254,7 +258,245 @@ class _PreOrderState extends State<PreOrder> {
                               child: CustomButton(
                                 icon: Icons.receipt_outlined,
                                 title: 'Order Now',
-                                onClick: _showModal,
+                                onClick: () => {
+                                  BottomModal.show(
+                                    context: context,
+                                    child: FractionallySizedBox(
+                                      heightFactor: 0.73,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0,
+                                          vertical: 20,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Choose Payment Method',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    size: 25,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.02,
+                                            ),
+                                            ReceiptContent(
+                                              title: 'Sub Total',
+                                              value: '₦10,000',
+                                            ),
+                                            ReceiptContent(
+                                              title: 'Service Fee',
+                                              value: '₦200',
+                                            ),
+                                            ReceiptContent(
+                                              title: 'Total',
+                                              value: '₦12,000',
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.02,
+                                            ),
+                                            PaymentMethodContent(
+                                              title: 'Transfer',
+                                              icon:
+                                                  Icons.network_check_outlined,
+                                              isSelected:
+                                                  selectedMethod == 'Transfer',
+                                              onSelect: () {
+                                                setState(
+                                                  () => selectedMethod =
+                                                      'Transfer',
+                                                );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.02,
+                                            ),
+                                            PaymentMethodContent(
+                                              title: 'Wallet',
+                                              icon: Icons
+                                                  .account_balance_wallet_outlined,
+                                              isSelected:
+                                                  selectedMethod == 'Wallet',
+                                              onSelect: () {
+                                                setState(
+                                                  () =>
+                                                      selectedMethod = 'Wallet',
+                                                );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.03,
+                                            ),
+                                            Spacer(),
+                                            Assurance(),
+                                            SizedBox(
+                                              height:
+                                                  MediaQuery.of(
+                                                    context,
+                                                  ).size.height *
+                                                  0.03,
+                                            ),
+                                            CustomButton(
+                                              title: 'Continue',
+                                              onClick: () {
+                                                context.pop();
+                                                BottomModal.show(
+                                                  context: context,
+                                                  child: FractionallySizedBox(
+                                                    heightFactor: 0.9,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 15.0,
+                                                            vertical: 20,
+                                                          ),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child:
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    context
+                                                                        .pop();
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons.close,
+                                                                    size: 25,
+                                                                  ),
+                                                                ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                MediaQuery.of(
+                                                                  context,
+                                                                ).size.height *
+                                                                0.02,
+                                                          ),
+                                                          Text(
+                                                            'Meet your attendant and say "6001"',
+                                                            style: Theme.of(context)
+                                                                .textTheme
+                                                                .titleLarge!
+                                                                .copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                MediaQuery.of(
+                                                                  context,
+                                                                ).size.height *
+                                                                0.01,
+                                                          ),
+                                                          Text(
+                                                            "Here's how it works",
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                MediaQuery.of(
+                                                                  context,
+                                                                ).size.height *
+                                                                0.02,
+                                                          ),
+                                                          TrackSuccessfulContent(
+                                                            orderNumber: '1',
+                                                            title:
+                                                                'Drive to the station',
+                                                            image:
+                                                                'assets/png/roadmap.png',
+                                                          ),
+                                                          TrackSuccessfulContent(
+                                                            orderNumber: '2',
+                                                            title:
+                                                                'Arrives at station',
+                                                            image:
+                                                                'assets/png/map.png',
+                                                          ),
+                                                          TrackSuccessfulContent(
+                                                            orderNumber: '3',
+                                                            title:
+                                                                'Meet you attendant and say your PIN',
+                                                            image:
+                                                                'assets/png/megaphone.png',
+                                                          ),
+                                                          TrackSuccessfulContent(
+                                                            orderNumber: '4',
+                                                            title:
+                                                                'Receive your order',
+                                                            image:
+                                                                'assets/png/fuel.png',
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                MediaQuery.of(
+                                                                  context,
+                                                                ).size.height *
+                                                                0.02,
+                                                          ),
+                                                          CustomButton(
+                                                            title: 'Okay',
+                                                            onClick: () {
+                                                              context.pop();
+                                                              context.go(
+                                                                '/order',
+                                                              );
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                },
                               ),
                             ),
                           ],
@@ -268,82 +510,6 @@ class _PreOrderState extends State<PreOrder> {
           ),
         ],
       ),
-    );
-  }
-
-  void _showModal() {
-    String selectedMethod = '';
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-      ),
-      backgroundColor: Colors.white,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return FractionallySizedBox(
-              heightFactor: 0.8,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15.0,
-                  vertical: 20,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Choose Payment Method',
-                          style: Theme.of(context).textTheme.titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(Icons.close, size: 25),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    PaymentMethodContent(
-                      title: 'Transfer',
-                      icon: Icons.network_check_outlined,
-                      isSelected: selectedMethod == 'Transfer',
-                      onSelect: () {
-                        print('Transfer');
-                        setModalState(() => selectedMethod = 'Transfer');
-                      },
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    PaymentMethodContent(
-                      title: 'Wallet',
-                      icon: Icons.account_balance_wallet_outlined,
-                      isSelected: selectedMethod == 'Wallet',
-                      onSelect: () {
-                        setModalState(() => selectedMethod = 'Wallet');
-                      },
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    Spacer(),
-                    Assurance(),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                    CustomButton(
-                      title: 'Continue',
-                      onClick: () {
-                        context.go('/receipt');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

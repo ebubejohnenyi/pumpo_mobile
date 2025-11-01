@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/data/bloc/stations/station_bloc.dart';
-import 'package:mobile/screens/pre_order/pre_order.dart';
-import 'package:mobile/screens/search/search.dart';
-import 'package:mobile/screens/settings/settings.dart';
 import 'package:mobile/widget/address_wrapper.dart';
 import 'package:mobile/widget/card_header.dart';
 import 'package:mobile/widget/icon_wrapper.dart';
 import 'package:mobile/widget/price_wrapper.dart';
-import 'package:mobile/screens/notification/notification_screen.dart';
+import 'package:mobile/widget/skeleton/card_skeleton.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -89,7 +86,7 @@ class Home extends StatelessWidget {
       body: BlocBuilder<StationBloc, StationState>(
         builder: (context, state) {
           if (state is StationLoading) {
-            return CircularProgressIndicator();
+            return CardSkeleton();
           } else if (state is StationLoaded) {
             return ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -194,164 +191,6 @@ class Home extends StatelessWidget {
           return SizedBox();
         },
       ),
-
-      // SingleChildScrollView(
-      //   padding: EdgeInsets.symmetric(horizontal: 10),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Text(
-      //         'Near by Stations',
-      //         style: Theme.of(
-      //           context,
-      //         ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-      //       ),
-      //       SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-      //       Padding(
-      //         padding: EdgeInsets.only(bottom: 20.0),
-      //         child: Card(
-      //           elevation: 0,
-      //           color: Colors.white,
-      //           child: Padding(
-      //             padding: const EdgeInsets.symmetric(horizontal: 10),
-      //             child: Column(
-      //               children: [
-      //                 CardHeader(
-      //                   title: 'Oando Ltd',
-      //                   distance: '12 km away',
-      //                   status: 'Active',
-      //                 ),
-      //                 Divider(
-      //                   color: Colors.grey[100],
-      //                   thickness: 1.5,
-      //                   height: 0,
-      //                 ),
-      //                 Padding(
-      //                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                     children: [
-      //                       PriceWrapper(
-      //                         title: 'Petrol',
-      //                         price: '630',
-      //                         unit: 'liter',
-      //                       ),
-      //                       PriceWrapper(
-      //                         title: 'Diesel',
-      //                         price: '950',
-      //                         unit: 'liter',
-      //                       ),
-      //                       PriceWrapper(
-      //                         title: 'Gas',
-      //                         price: '330',
-      //                         unit: 'kg',
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //                 Divider(
-      //                   color: Colors.grey[100],
-      //                   thickness: 1.5,
-      //                   height: 0,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.02,
-      //                 ),
-      //                 AddressWrapper(
-      //                   label: 'Filling Stattion',
-      //                   address: 'Sabo yaba round about, off iwaya road.',
-      //                   icon: Icons.my_location,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.01,
-      //                 ),
-      //                 AddressWrapper(
-      //                   label: 'You',
-      //                   address: '88 Ozumba Mbadiwe Lekki Road',
-      //                   icon: Icons.location_pin,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.02,
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.only(bottom: 10.0),
-      //         child: Card(
-      //           elevation: 0,
-      //           color: Colors.white,
-      //           child: Padding(
-      //             padding: const EdgeInsets.symmetric(horizontal: 10),
-      //             child: Column(
-      //               children: [
-      //                 CardHeader(
-      //                   title: 'Oando Ltd',
-      //                   distance: '12 km away',
-      //                   status: 'Active',
-      //                 ),
-      //                 Divider(
-      //                   color: Colors.grey[100],
-      //                   thickness: 1.5,
-      //                   height: 0,
-      //                 ),
-      //                 Padding(
-      //                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-      //                   child: Row(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                     children: [
-      //                       PriceWrapper(
-      //                         title: 'Petrol',
-      //                         price: '630',
-      //                         unit: 'liter',
-      //                       ),
-      //                       PriceWrapper(
-      //                         title: 'Diesel',
-      //                         price: '950',
-      //                         unit: 'liter',
-      //                       ),
-      //                       PriceWrapper(
-      //                         title: 'Gas',
-      //                         price: '330',
-      //                         unit: 'kg',
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //                 Divider(
-      //                   color: Colors.grey[100],
-      //                   thickness: 1.5,
-      //                   height: 0,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.02,
-      //                 ),
-      //                 AddressWrapper(
-      //                   label: 'Filling Stattion',
-      //                   address: 'Sabo yaba round about, off iwaya road.',
-      //                   icon: Icons.my_location,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.01,
-      //                 ),
-      //                 AddressWrapper(
-      //                   label: 'You',
-      //                   address: '88 Ozumba Mbadiwe Lekki Road',
-      //                   icon: Icons.location_pin,
-      //                 ),
-      //                 SizedBox(
-      //                   height: MediaQuery.of(context).size.height * 0.02,
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
